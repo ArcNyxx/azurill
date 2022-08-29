@@ -5,5 +5,5 @@
 typedef struct status {
 	time_t start;
 	pid_t parent, child;
-	bool down, once, pause;
+	bool down, pause;
 } status_t;

@@ -1,0 +1,76 @@
+.\" azurill - init system
+.\" Copyright (C) 2022 ArcNyxx
+.\" see LICENCE file for licensing information
+.TH AZUCTL 1 azurill-VERSION
+.SH NAME
+azuctl \- control
+.BR azuwatch (1)
+processes
+.SH SYNOPSIS
+.SY azuctl
+.OP -acdhikptux
+[dir...]
+.YS
+.SH DESCRIPTION
+.BR azuctl (1)
+sends the specified character commands to
+.BR azuwatch (1)
+processes in each directory specified.  These commands affect the daemon
+controlled by the
+.BR azuwatch (1)
+process and are used to start and stop execution, send signals, or change
+operation.  A list of flags and their effects follows:
+.TP
+.B -d
+Will not restart the daemon if it exits.  Attempts to disable the daemon by
+sending
+.B SIGTERM
+to kill followed by
+.B SIGCONT
+to unpause the daemon in case it is paused.
+.TQ
+.B -u
+Enables the daemon if disabled.  Forks a new process and executes the daemon.
+.TQ
+.B -p
+Pauses the daemon if not paused already by sending
+.BR SIGSTOP .
+.TQ
+.B -c
+Continues execution of the daemon if paused by sending
+.BR SIGCONT .
+.TQ
+.B -a
+Sends a
+.B SIGALRM
+signal to the daemon.
+.TQ
+.B -h
+Sends a
+.B SIGHUP
+signal to the daemon.
+.TQ
+.B -k
+Sends a
+.B SIGKILL
+signal to the daemon.
+.TQ
+.B -t
+Sends a
+.B SIGTERM
+signal to the daemon.
+.TQ
+.B -i
+Sends a
+.B SIGINT
+signal to the daemon.
+.TQ
+.B -x
+Sets the
+.BR azuwatch (1)
+process to exit as soon as it completes current command processing.  This
+command does not disable or affect the daemon.
+.SH AUTHORS
+Written by ArcNyxx.
+.SH SEE ALSO
+.BR azuinit (1),\  azurun (1),\  azustat (1),\  azuwatch (1)

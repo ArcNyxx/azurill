@@ -1,0 +1,17 @@
+azurill - init system
+=====================
+azurill is an init system and daemon handler for Unix-based operating systems.
+
+Installation
+------------
+azurill comes with a Makefile and config.mk file for configurable building and
+testing.  Edit the latter to match your local setup (azurill is installed into
+the /usr/local namespace by default, you may need to modify your $PATH).
+
+azurill can be built and installed with the following command (run as root):
+
+    make clean install
+
+Further configuration will be necessary, extensively researching your
+distribution prior to changing init systems is highly recommended.  Scripts and
+other programs may need to be created to run azurill successfully.

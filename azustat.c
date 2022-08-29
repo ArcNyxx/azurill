@@ -23,7 +23,7 @@ main(int argc, char **argv)
 	status_t status;
 	if ((fd = open("stat", O_RDONLY)) == -1)
 		die("azustat: unable to open: %s/stat: ", argv[1]);
-	if (read(fd, &status, sizeof(status)) != sizeof(status))
+	if (read(fd, &status, sizeof(status_t)) != sizeof(status_t))
 		die("azustat: unable to read: %s/stat: ", argv[1]);
 	close(fd);
 
@@ -43,8 +43,6 @@ main(int argc, char **argv)
 		printf("azustat: child wanted down\n");
 	else
 		printf("azustat: child wanted up\n");
-	if (status.once)
-		printf("azustat: child running once\n");
 	if (status.pause)
 		printf("azustat: child paused\n");
 }

@@ -1,0 +1,29 @@
+.\" azurill - init system
+.\" Copyright (C) 2022 ArcNyxx
+.\" see LICENCE file for licensing information
+.TH AZUINIT 1 azurill-VERSION
+.SH NAME
+azuinit \- init process
+.SH SYNOPSIS
+.SY azuinit
+.YS
+.SH DESCRIPTION
+.BR azuinit (1)
+is an init process.  As the first process to run in userspace,
+.BR azuinit (1)
+blocks all signals, indefinitely reaps zombies, and forks
+.B /etc/rc.init
+to initialise the system.
+.BR azuinit (1)
+responds to a
+.B SIGTERM
+signal by running
+.B /etc/rc.shutdown poweroff
+and reacts to a
+.B SIGINT
+signal by running
+.BR /etc/rc.shutdown\ reboot .
+.SH AUTHOR
+Written by ArcNyxx.
+.SH SEE ALSO
+.BR azuctl (1),\  azurun (1),\  azustat (1),\  azuwatch (1)

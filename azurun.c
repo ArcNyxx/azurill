@@ -10,14 +10,9 @@
 
 #include "die.h"
 
-
 static void start(char *name, dev_t dev, ino_t ino);
 
-struct {
-	dev_t dev;
-	ino_t ino;
-	pid_t pid;
-} serv[256];
+struct { dev_t dev; ino_t ino; pid_t pid; } serv[256];
 int servlen = 0;
 
 static void

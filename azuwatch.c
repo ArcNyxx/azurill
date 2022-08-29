@@ -18,7 +18,7 @@ static pid_t start(const char *dir);
 static void status(pid_t pid);
 
 time_t newtime;
-bool down, once, ppause = false, pexit = false;
+bool down, ppause = false, pexit = false;
 
 static pid_t
 start(const char *dir)
@@ -48,7 +48,7 @@ status(pid_t pid)
 	if ((fd = open("stat.new", O_WRONLY | O_CREAT | O_TRUNC)) == -1)
 		return;
 	if (write(fd, &(status_t){ 
-		newtime, getpid(), pid, down, once, ppause
+		newtime, getpid(), pid, down, ppause
 	}, sizeof(status_t)) != sizeof(status_t)) {
 		close(fd);
 		return;
@@ -69,7 +69,7 @@ main(int argc, char **argv)
 	down = stat("down", &info) != -1;
 	if (!down && errno != ENOENT)
 		die("azuwatch: unable to stat: %s/down: ", argv[1]);
-	once = stat("once", &info) != -1;
+	bool once = stat("once", &info) != -1;
 	if (!once && errno != ENOENT)
 		die("azuwatch: unable to stat: %s/once: ", argv[1]);
 
@@ -96,9 +96,9 @@ main(int argc, char **argv)
 			if (check == pid) {
 				if (pexit)
 					return 0;
+				pid = down ? 0 : start(argv[1]);
 				if (once)
 					down = once = false;
-				pid = down ? 0 : start(argv[1]);
 				status(pid);
 				break;
 			}
@@ -117,7 +117,7 @@ main(int argc, char **argv)
 			status(pid);
 			break;
 		case 'u':
-			down = ppause = false;
+			down = false;
 			if (pid == 0)
 				pid = start(argv[1]);
 			status(pid);
@@ -153,10 +153,6 @@ main(int argc, char **argv)
 		case 'i':
 			if (pid != 0)
 				kill(pid, SIGINT);
-			break;
-		case 'o':
-			once = true;
-			status(pid);
 			break;
 		case 'x':
 			pexit = true;

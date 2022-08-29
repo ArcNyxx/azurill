@@ -17,7 +17,7 @@ main(int argc, char **argv)
 	int fddir;
 	if ((fddir = open(".", 0)) == -1)
 		die("azuctl: unable to open: .: ");
-	size_t len = strlen(argv[1]);
+	size_t len = strlen(argv[1] = &argv[1][1]);
 
 	for (int i = 0; argv[i + 2] != NULL; ++i) {
 		if (chdir(argv[i + 2]) == -1)
@@ -30,7 +30,7 @@ main(int argc, char **argv)
 			die("azuctl: unable to write: %s/ctl: ", argv[i + 2]);
 		close(fd);
 
-		if (fchdir(fd) == -1)
+		if (fchdir(fddir) == -1)
 			die("azuctl: unable to chdir: ");
 	}
 }

@@ -1,0 +1,35 @@
+.\" azurill - init system
+.\" Copyright (C) 2022 ArcNyxx
+.\" see LICENCE file for licensing information
+.TH AZUWATCH 1 azurill-VERSION
+.SH NAME
+azuwatch \- daemon manager
+.SH SYNOPSIS
+.SY azuwatch
+[dir]
+.YS
+.SH DESCRIPTION
+.BR azuwatch (1)
+manages a daemon by executing the
+.B run
+file in the supplied directory and restarting it when it exits.  If the
+.B down
+file exists on startup or the command to disable the daemon is sent,
+.BR azuwatch (1)
+will not restart the daemon until the command to enable the daemon is sent.  If
+the
+.B once
+file exists on startup,
+.B run
+will not be restarted.
+.BR azuwatch (1)
+is typically run by
+.BR azurun (1),
+writes status information to be displayed by
+.BR azustat (1),
+and accepts commands from
+.BR azuctl (1).
+.SH AUTHOR
+Written by ArcNyxx.
+.SH SEE ALSO
+.BR azuctl (1),\  azuinit (1),\  azurun (1),\  azustat (1)

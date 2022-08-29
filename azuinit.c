@@ -16,7 +16,14 @@ main(void)
 	sigfillset(&set);
 	sigprocmask(SIG_BLOCK, &set, NULL);
 
-	if (fork() != 0) for (;;) {
+	if (fork() == 0) {
+		sigprocmask(SIG_UNBLOCK, &set, NULL);
+		setsid(); setpgid(0, 0);
+		execl("/etc/rc.init", "rc.init", (char *)0);
+		return 1;
+	}
+
+	for (;;) {
 		int signal;
 		sigwait(&set, &signal);
 
@@ -24,19 +31,10 @@ main(void)
 			while (waitpid(-1, NULL, WNOHANG) > 0);
 		} else if (signal == SIGTERM || signal == SIGINT) {
 			sigprocmask(SIG_UNBLOCK, &set, NULL);
-			execve("/etc/rc.shutdown", signal != SIGTERM ?
-					(char *[]){ (char []){
-							"reboot" }, NULL } :
-					(char *[]){ (char []){
-							"poweroff" }, NULL },
-					(char *[]){ NULL });
+			execl("/etc/rc.shutdown",
+					"rc.shutdown", signal == SIGTERM ?
+					"poweroff" : "reboot", (char *)0);
 			return 1;
 		}
 	}
-
-	/* child must execute init scripts */
-	sigprocmask(SIG_UNBLOCK, &set, NULL);
-	setsid(); setpgid(0, 0);
-	execve("/etc/rc.init", (char *[]){ NULL }, (char *[]){ NULL });
-	return 1;
 }

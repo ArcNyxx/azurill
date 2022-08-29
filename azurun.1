@@ -1,0 +1,25 @@
+.\" azurill - init system
+.\" Copyright (C) 2022 ArcNyxx
+.\" see LICENCE file for licensing information
+.TH AZURUN 1 azurill-VERSION
+.SH NAME
+azurun \- run
+.BR azuwatch (1)
+processes
+.SH SYNOPSIS
+.SY azurun
+[dir]
+.YS
+.SH DESCRIPTION
+.BR azurun (1)
+searches for directories within the supplied directory, running an
+.BR azuwatch (1)
+process for each one to manage a daemon.  If an
+.BR azuwatch (1)
+process exits,
+.BR azurun (1)
+restarts it.
+.SH AUTHOR
+Written by ArcNyxx.
+.SH SEE ALSO
+.BR azuctl (1),\  azuinit (1),\  azustat (1),\  azuwatch (1)

@@ -1,0 +1,25 @@
+.\" azurill - init system
+.\" Copyright (C) 2022 ArcNyxx
+.\" see LICENCE file for licensing information
+.TH AZUSTAT 1 azurill-VERSION
+.SH NAME
+azustat \- display information about
+.BR azuwatch (1)
+processes
+.SH SYNOPSIS
+.SY azustat
+[dir...]
+.YS
+.SH DESCRIPTION
+.BR azustat (1)
+displays information about
+.BR azuwatch (1)
+processes running in each directory specified.  This information includes
+whether an
+.BR azuwatch (1)
+process is running, whether its daemon is running, if the daemon is paused, and
+whether the daemon is wanted up or down.
+.SH AUTHOR
+Written by ArcNyxx.
+.SH SEE ALSO
+.BR azuctl (1),\  azuinit (1),\  azurun (1),\  azuwatch (1)
