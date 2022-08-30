@@ -38,8 +38,6 @@ start(char *name, dev_t dev, ino_t ino)
 		serv[i].pid = pid;
 		break;
 	case 0:
-		if (chdir(name) == -1)
-			die("azurun: unable to chdir: %s: ", name);
 		execvp("azuwatch", (char *[]){
 				(char []){ "azuwatch" }, name, NULL });
 		die("azurun: unable to exec: azuwatch %s: ", name);
