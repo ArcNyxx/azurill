@@ -24,16 +24,15 @@ main(void)
 	}
 
 	for (;;) {
-		int signal;
-		sigwait(&set, &signal);
+		int sig;
+		sigwait(&set, &sig);
 
-		if (signal == SIGCHLD) {
+		if (sig == SIGCHLD) {
 			while (waitpid(-1, NULL, WNOHANG) > 0);
-		} else if (signal == SIGTERM || signal == SIGINT) {
+		} else if (sig == SIGTERM || sig == SIGINT) {
 			sigprocmask(SIG_UNBLOCK, &set, NULL);
-			execl("/etc/rc.shutdown",
-					"rc.shutdown", signal == SIGTERM ?
-					"poweroff" : "reboot", (char *)0);
+			execl("/etc/rc.shutdown", "rc.shutdown", sig == SIGINT
+					? "reboot" : "poweroff", (char *)0);
 			return 1;
 		}
 	}
